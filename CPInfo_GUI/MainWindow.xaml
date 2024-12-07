@@ -1,0 +1,43 @@
+﻿<Window x:Class="CPInfo_GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CPInfo_GUI"
+        mc:Ignorable="d"
+        Title="CPInfo_GUI" Height="450" Width="800"
+        KeyDown="Window_KeyDown"
+        MouseLeftButtonUp="Tekst_powitalny_MouseLeftButtonUp">
+    <Window.Resources>
+        <Storyboard x:Key="PulseAnimation">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                         From="0.5" To="1.0" Duration="0:0:1" AutoReverse="True" RepeatBehavior="Forever"/>
+        </Storyboard>
+    </Window.Resources>
+    <Grid>
+        <Grid>
+            <TextBlock x:Name="Tekst_powitalny" Text="CPInfo_GUI"
+       HorizontalAlignment="Center"
+       VerticalAlignment="Center"
+       FontSize="36"
+       FontWeight="Bold"
+       TextAlignment="Center"
+       Foreground="DodgerBlue"/>
+
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard Storyboard="{StaticResource PulseAnimation}"/>
+                </EventTrigger>
+            </Grid.Triggers>
+        </Grid>
+        <TextBlock x:Name="Informacja_przejscia_dalej" Text="Kliknij dowolny klawisz na klawiaturze lub lewy przycisk myszy żeby przejść dalej."
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Margin="0,0,0,20"
+            FontSize="14"
+            Foreground="LightGray"/>
+        <ProgressBar x:Name="progressBar" HorizontalAlignment="Center" VerticalAlignment="Center"
+                     Width="200" Height="20" Visibility="Collapsed" IsIndeterminate="True" />
+        <Frame x:Name="Main" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>
