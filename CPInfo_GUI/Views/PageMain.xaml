@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:CPInfo_GUI.view"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+
       Title="PageMain">
     <Grid>
         <Grid.RowDefinitions>
@@ -89,19 +90,19 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nazwa Urządzenia" Binding="{Binding NazwaUrzadzenia}" Width="220" IsReadOnly="True">
+                <DataGridTextColumn Header="Nazwa Urządzenia" Binding="{Binding NazwaUrzadzenia}" Width="260" IsReadOnly="True">
                     
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Nazwa Czujnika" Binding="{Binding NazwaCzujnika}" Width="200" IsReadOnly="True">
                     
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Wartość" Binding="{Binding Wartosc}" Width="100" IsReadOnly="True" >
+                <DataGridTextColumn Header="Wartość" Binding="{Binding Wartosc}" Width="120" IsReadOnly="True" >
                     
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Min" Binding="{Binding Min}" Width="100" IsReadOnly="True">
+                <DataGridTextColumn Header="Min" Binding="{Binding Min}" Width="120" IsReadOnly="True">
                     
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Max" Binding="{Binding Max}" Width="100" IsReadOnly="True">
+                <DataGridTextColumn Header="Max" Binding="{Binding Max}" Width="120" IsReadOnly="True">
                     
                 </DataGridTextColumn>
             </DataGrid.Columns>
