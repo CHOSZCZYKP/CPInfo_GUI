@@ -45,7 +45,7 @@
                     <MenuItem x:Name="Interwal10s" Header="10 s" IsCheckable="True" Click="Interwal10s_Click" Tag="AktualizacjaInterwalow"></MenuItem>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Zakończ">
+                <MenuItem x:Name="Zakoncz" Header="Zakończ" Click="Zakoncz_Click">
                     <MenuItem.Icon>
                         <Image Source="C:\Users\Pawel\source\repos\CPInfo_GUI\CPInfo_GUI\Assets\close.png" Stretch="None"/>
                     </MenuItem.Icon>
@@ -89,13 +89,13 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nazwa Urządzenia" Binding="{Binding NazwaUrzadzenia}" Width="180" IsReadOnly="True">
+                <DataGridTextColumn Header="Nazwa Urządzenia" Binding="{Binding NazwaUrzadzenia}" Width="220" IsReadOnly="True">
                     
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Nazwa Czujnika" Binding="{Binding NazwaCzujnika}" Width="200" IsReadOnly="True">
                     
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Wartość" Binding="{Binding Wartosc}" Width="100" IsReadOnly="True">
+                <DataGridTextColumn Header="Wartość" Binding="{Binding Wartosc}" Width="100" IsReadOnly="True" >
                     
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Min" Binding="{Binding Min}" Width="100" IsReadOnly="True">

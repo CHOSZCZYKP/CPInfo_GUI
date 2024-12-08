@@ -27,12 +27,6 @@ namespace CPInfo_GUI.view
     {
         private Controller _controller;
         private Model _model;
-        private DispatcherTimer _timer;
-        public string WidokTemperatur { get; private set; }
-        public string WidokAktualizacjaInterwalow { get; private set; }
-        public List<string> WybraneKolumny { get; private set; }
-
-        //te właściwości lepiej jednak będzie jeśli zamienię na na argumenty w funkcjach
 
         public PageMain()
         {
@@ -43,14 +37,8 @@ namespace CPInfo_GUI.view
             StopnieCelciusza.IsChecked = true;
             Interwal1s.IsChecked = true;
             KolumnaWartosc.IsChecked = true;
-            WybraneKolumny = new List<string>() { "Wartość" };
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += Timer_Tick;
-            _timer.Start();
-
-            _model.DaneCzujnikow("CPU", "°C");
-            DataGridCzujniki.ItemsSource = _model.ListaCzujnikowInfo;
+            KolumnaMin.IsChecked = true;
+            KolumnaMax.IsChecked = true;
         }
 
         private void MenuItem_Click_OProgramie(object sender, RoutedEventArgs e)
@@ -60,16 +48,14 @@ namespace CPInfo_GUI.view
 
         private void MenuItem_Click_StopnieCelciusza(object sender, RoutedEventArgs e)
         {
-            WidokTemperatur = "Stopnie Celciusza";
             WybierzTylkoJedenMenuItem(sender);
-            _controller.ControlerJednostkaTemperatury();
+            _controller.ControlerJednostkaTemperatury("Stopnie Celciusza");
         }
 
         private void MenuItem_Click_StopnieFarenheita(object sender, RoutedEventArgs e)
         {
-            WidokTemperatur = "Stopnie Farenheita";
             WybierzTylkoJedenMenuItem(sender);
-            _controller.ControlerJednostkaTemperatury();
+            _controller.ControlerJednostkaTemperatury("Stopnie Farenheita");
         }
 
         private void WybierzTylkoJedenMenuItem(object sender)
@@ -94,93 +80,46 @@ namespace CPInfo_GUI.view
 
         private void Interwal250ms_Click(object sender, RoutedEventArgs e)
         {
-            WidokAktualizacjaInterwalow = "250 ms";
             WybierzTylkoJedenMenuItem(sender);
-            _controller.ControlerAktualizacjaInterwalow();
+            _controller.ControlerAktualizacjaInterwalow("250 ms");
 
         }
 
         private void Interwal500ms_Click(object sender, RoutedEventArgs e)
         {
-            WidokAktualizacjaInterwalow = "500 ms";
             WybierzTylkoJedenMenuItem(sender);
-            _controller.ControlerAktualizacjaInterwalow();
+            _controller.ControlerAktualizacjaInterwalow("500 ms");
         }
 
         private void Interwal1s_Click(object sender, RoutedEventArgs e)
         {
-            WidokAktualizacjaInterwalow = "1 s";
             WybierzTylkoJedenMenuItem(sender);
-            _controller.ControlerAktualizacjaInterwalow();
+            _controller.ControlerAktualizacjaInterwalow("1 s");
         }
 
         private void Interwal2s_Click(object sender, RoutedEventArgs e)
         {
-            WidokAktualizacjaInterwalow = "2 s";
             WybierzTylkoJedenMenuItem(sender);
-            _controller.ControlerAktualizacjaInterwalow();
+            _controller.ControlerAktualizacjaInterwalow("2 s");
         }
 
         private void Interwal5s_Click(object sender, RoutedEventArgs e)
         {
-            WidokAktualizacjaInterwalow = "5 s";
             WybierzTylkoJedenMenuItem(sender);
-            _controller.ControlerAktualizacjaInterwalow();
+            _controller.ControlerAktualizacjaInterwalow("5 s");
         }
 
         private void Interwal10s_Click(object sender, RoutedEventArgs e)
         {
-            WidokAktualizacjaInterwalow = "10 s";
             WybierzTylkoJedenMenuItem(sender);
-            _controller.ControlerAktualizacjaInterwalow();
+            _controller.ControlerAktualizacjaInterwalow("10 s");
         }
 
         private void Kolumna_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is MenuItem menuItem && menuItem.Tag is string kolumna)
-            {
-                if (menuItem.IsChecked)
-                {
-                    if (!WybraneKolumny.Contains(kolumna))
-                    {
-                        WybraneKolumny.Add(kolumna);
-                    }
-                }
-                else
-                {
-                    WybraneKolumny.Remove(kolumna);
-                }
-            }
-            _controller.ControlerWyswietlanieKolumny();
+            
+            _controller.ControlerWyswietlanieKolumny(sender);
         }
-
-        /*private void KolumnaMin_Click(object sender, RoutedEventArgs e)
-        {
-            var menuItem = sender as MenuItem;
-            if (menuItem.IsChecked)
-            {
-                WybraneKolumny.Add("Min");
-            }
-            else
-            {
-                WybraneKolumny.Remove("Min");
-            }
-            _controller.ControlerWyswietlanieKolumny();
-        }
-
-        private void KolumnaMax_Click(object sender, RoutedEventArgs e)
-        {
-            var menuItem = sender as MenuItem;
-            if (menuItem.IsChecked)
-            {
-                WybraneKolumny.Add("Max");
-            }
-            else
-            {
-                WybraneKolumny.Remove("Max");
-            }
-            _controller.ControlerWyswietlanieKolumny();
-        }*/
 
         private void ZapiszJako_Click(object sender, RoutedEventArgs e)
         {
@@ -193,14 +132,9 @@ namespace CPInfo_GUI.view
 
             if (!string.IsNullOrEmpty(wybranyPodzespol))
             {
-                _model.WylaczenieWszystkichPodzespolow();
-                MessageBox.Show($"Wybrano podzespóół: {wybranyPodzespol}");
-                _model.DaneCzujnikow(wybranyPodzespol, "°C");
                 DataGridCzujniki.ItemsSource = null;
 
-                DataGridCzujniki.ItemsSource = _model.ListaCzujnikowInfo;
-                
-                
+                DataGridCzujniki.ItemsSource = _controller.ControlerInformacjeOPodzespolach(wybranyPodzespol);
             }
             else
             {
@@ -208,15 +142,10 @@ namespace CPInfo_GUI.view
             }
 
         }
-        // Zdarzenie, które wywołuje się co 1 sekundę
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            // Aktualizacja danych czujników
-            _model.AktualizacjaCzujnikow("°C");
 
-            // Odświeżenie DataGrid
-            DataGridCzujniki.ItemsSource = null;
-            DataGridCzujniki.ItemsSource = _model.ListaCzujnikowInfo;
+        private void Zakoncz_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

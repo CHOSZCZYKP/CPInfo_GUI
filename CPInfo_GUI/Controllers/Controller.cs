@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace CPInfo_GUI.Controllers
 {
@@ -14,6 +17,7 @@ namespace CPInfo_GUI.Controllers
     {
         private Model _model;
         private PageMain _view;
+        private DispatcherTimer _timer;
 
         public string JednostkaTemperatury { get; set; }
         public string AktualizacjaInterwalow { get; set; }
@@ -26,20 +30,40 @@ namespace CPInfo_GUI.Controllers
             this._view = view;
             this.JednostkaTemperatury = "°C";
             this.AktualizacjaInterwalow = "1 s";
-            this.KolumnyWyswietlane = new List<string>() { "Wartość" };
+            this.KolumnyWyswietlane = new List<string>() { "Wartość", "Min", "Max" };
 
+
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick;
+            _timer.Start();
+            _model.DaneCzujnikow("CPU", "°C");
+            _view.DataGridCzujniki.ItemsSource = _model.ListaCzujnikowInfo;
         }
 
-        public void ControlerWyswietlanieKolumny()
+        public void ControlerWyswietlanieKolumny(object sender)
         {
-            KolumnyWyswietlane.Clear();
-            KolumnyWyswietlane.AddRange(_view.WybraneKolumny);
+            if (sender is MenuItem menuItem && menuItem.Tag is string kolumna)
+            {
+                if (menuItem.IsChecked)
+                {
+                    if (!KolumnyWyswietlane.Contains(kolumna))
+                    {
+                        KolumnyWyswietlane.Add(kolumna);
+                    }
+                }
+                else
+                {
+                    KolumnyWyswietlane.Remove(kolumna);
+                }
+            }
+            _view.DataGridCzujniki.Columns[2].Visibility = KolumnyWyswietlane.Contains("Wartość") ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            _view.DataGridCzujniki.Columns[3].Visibility = KolumnyWyswietlane.Contains("Min") ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            _view.DataGridCzujniki.Columns[4].Visibility = KolumnyWyswietlane.Contains("Max") ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
         }
 
-        public void ControlerJednostkaTemperatury()
+        public void ControlerJednostkaTemperatury(string wyborTemperatury)
         {
-            string wyborTemperatury = _view.WidokTemperatur;
-            string jednostka = string.Empty;
             if (wyborTemperatury.Equals("Stopnie Celciusza"))
             {
                 JednostkaTemperatury = "°C";
@@ -51,10 +75,10 @@ namespace CPInfo_GUI.Controllers
 
         }
 
-        public void ControlerAktualizacjaInterwalow()
+        public void ControlerAktualizacjaInterwalow(string aktualizacjaInterwalow)
         {
-            string wyborAktualizajiInterwalow = _view.WidokAktualizacjaInterwalow;
-            AktualizacjaInterwalow = wyborAktualizajiInterwalow;
+            AktualizacjaInterwalow = aktualizacjaInterwalow;
+            _timer.Interval = TimeSpan.FromMilliseconds(HelperKonwerter.KonverterMilisekundy(aktualizacjaInterwalow));
         }
 
         public void ControlerPobranePobierz()
@@ -75,8 +99,24 @@ namespace CPInfo_GUI.Controllers
             }
             
         }
-        
 
-        
+
+        public List<CzujnikiInfo> ControlerInformacjeOPodzespolach(string wyborPodzespolu)
+        {
+            _model.WylaczenieWszystkichPodzespolow();
+            _model.DaneCzujnikow(wyborPodzespolu, JednostkaTemperatury);
+            if (!_model.ListaCzujnikowInfo.Any())
+            {
+                MessageBox.Show($"Nie udało się pobrać informacji o podzespole: {wyborPodzespolu}", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            return _model.ListaCzujnikowInfo;
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            _model.AktualizacjaCzujnikow(JednostkaTemperatury);
+
+            _view.DataGridCzujniki.ItemsSource = null;
+            _view.DataGridCzujniki.ItemsSource = _model.ListaCzujnikowInfo;
+        }
     }
 }

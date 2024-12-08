@@ -19,7 +19,7 @@
             <TextBlock x:Name="Tekst_powitalny" Text="CPInfo_GUI"
        HorizontalAlignment="Center"
        VerticalAlignment="Center"
-       FontSize="36"
+       FontSize="46"
        FontWeight="Bold"
        TextAlignment="Center"
        Foreground="DodgerBlue"/>
