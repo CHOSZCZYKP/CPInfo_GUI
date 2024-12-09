@@ -236,7 +236,7 @@ namespace CPInfo_GUI.Models
             }
             return lista;
         }
-        public void ZapisDoPliku(string calaSciezka/*, ProgressTask task*/)
+        public void ZapisDoPliku(string calaSciezka)
         {
             using (StreamWriter streamWriter = new StreamWriter(calaSciezka))
             {
@@ -245,8 +245,6 @@ namespace CPInfo_GUI.Models
                 foreach (var info in Specyfikacja)
                 {
                     streamWriter.WriteLine(info);
-                    //task.Increment(1);
-                    //Thread.Sleep(1);
                 }
 
             }

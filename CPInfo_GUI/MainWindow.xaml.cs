@@ -30,32 +30,23 @@ namespace CPInfo_GUI
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             ShowProgressBar();
-            /*Tekst_powitalny.Visibility = Visibility.Collapsed;
-            Main.Content = new PageMain();*/
         }
 
         private void Tekst_powitalny_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             ShowProgressBar();
-            /*Tekst_powitalny.Visibility = Visibility.Collapsed;
-            Main.Content = new PageMain();*/
         }
         private async void ShowProgressBar()
         {
-            // Ukrywa tekst powitalny i pokazuje ProgressBar
             Tekst_powitalny.Visibility = Visibility.Collapsed;
             Informacja_przejscia_dalej.Visibility = Visibility.Collapsed;
             progressBar.Visibility = Visibility.Visible;
 
-            // Symulacja jakiejś operacji, np. 3 sekundowego oczekiwania
-            await Task.Delay(3500); // Użyj await, aby opóźnić zadanie asynchronicznie
+            await Task.Delay(3500);
 
-            // Po upływie 3 sekund, ukryj ProgressBar
             progressBar.Visibility = Visibility.Collapsed;
             Main.Content = new PageMain();
         }
         
-
-
     }
 }

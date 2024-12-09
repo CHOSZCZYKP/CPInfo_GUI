@@ -11,18 +11,21 @@
     <Window.Resources>
         <Storyboard x:Key="PulseAnimation">
             <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                         From="0.5" To="1.0" Duration="0:0:1" AutoReverse="True" RepeatBehavior="Forever"/>
+                             From="0.5" To="1.0" 
+                             Duration="0:0:1" 
+                             AutoReverse="True" 
+                             RepeatBehavior="Forever"/>
         </Storyboard>
     </Window.Resources>
     <Grid>
         <Grid>
             <TextBlock x:Name="Tekst_powitalny" Text="CPInfo_GUI"
-       HorizontalAlignment="Center"
-       VerticalAlignment="Center"
-       FontSize="46"
-       FontWeight="Bold"
-       TextAlignment="Center"
-       Foreground="DodgerBlue"/>
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="46"
+                       FontWeight="Bold"
+                       TextAlignment="Center"
+                       Foreground="DodgerBlue"/>
 
             <Grid.Triggers>
                 <EventTrigger RoutedEvent="Loaded">
@@ -30,14 +33,21 @@
                 </EventTrigger>
             </Grid.Triggers>
         </Grid>
-        <TextBlock x:Name="Informacja_przejscia_dalej" Text="Kliknij dowolny klawisz na klawiaturze lub lewy przycisk myszy żeby przejść dalej."
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            Margin="0,0,0,20"
-            FontSize="14"
-            Foreground="LightGray"/>
-        <ProgressBar x:Name="progressBar" HorizontalAlignment="Center" VerticalAlignment="Center"
-                     Width="200" Height="20" Visibility="Collapsed" IsIndeterminate="True" />
-        <Frame x:Name="Main" NavigationUIVisibility="Hidden"/>
+        <TextBlock x:Name="Informacja_przejscia_dalej" 
+                   Text="Kliknij dowolny klawisz na klawiaturze lub lewy przycisk myszy żeby przejść dalej."
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Margin="0,0,0,20"
+                   FontSize="14"
+                   Foreground="LightGray"/>
+        <ProgressBar x:Name="progressBar" 
+                     HorizontalAlignment="Center" 
+                     VerticalAlignment="Center"
+                     Width="200" 
+                     Height="20" 
+                     Visibility="Collapsed" 
+                     IsIndeterminate="True" />
+        <Frame x:Name="Main" 
+               NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
